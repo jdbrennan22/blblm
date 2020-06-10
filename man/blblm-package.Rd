@@ -2,12 +2,13 @@
 % Please edit documentation in R/blblm.R
 \docType{package}
 \name{blblm-package}
-\alias{blblm}
-\alias{blblm-package}
-\title{blblm: What the Package Does (Title Case)}
+\title{blblm: Bag of Little Bootstraps Algorithm}
 \description{
-More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Bootstrapping allows a simple assessment of the quality of estimators, and blblm
+    is an alternative procedure that incorporates both bootstrapping and subsampling methods. This package
+    works well on large datasets because it is well-suited for parallel and distributed computing. The benefits
+    of blblm are it is compuationally friendly, flexible, and maintains most of the statistical properties of 
+    regular bootstrapping.
 }
 \details{
 Linear Regression with Little Bag of Bootstraps
