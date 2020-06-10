@@ -1,18 +1,27 @@
 Package: blblm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Bag of Little Bootstraps Algorithm
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Jordan Brennan
+Maintainer: The package maintainer <jdbrennan@ucdavis.edu>
+Description: Bootstrapping allows a simple assessment of the quality of estimators, and blblm
+    is an alternative procedure that incorporates both bootstrapping and subsampling methods. This package
+    works well on large datasets because it is well-suited for parallel and distributed computing. The benefits
+    of blblm are it is compuationally friendly, flexible, and maintains most of the statistical properties of 
+    regular bootstrapping. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat (>= 2.1.0)
+    tidyverse,
+    knitr,
+    rmarkdown
 Imports: 
     purrr,
-    magrittr
+    magrittr,
+    furrr,
+    utils,
+    testthat
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
+VignetteBuilder: knitr

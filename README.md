@@ -17,7 +17,7 @@ confint(fit, c("wt", "hp"))
 #> hp  -0.1960903 -0.07049867
 sigma(fit)
 #> [1] 1.838911
-sigma(fit, confidence = TRUE)
+sigma(fit, confidence = TRUE, level = .95)
 #>    sigma      lwr      upr 
 #> 1.838911 1.350269 2.276347
 predict(fit, data.frame(wt = c(2.5, 3), hp = c(150, 170)))

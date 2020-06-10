@@ -1,0 +1,145 @@
+---
+title: "Using blblm"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using blblm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+This package contains the bag of little bootstraps for linear regression algorithm that assesses the quality of estimators. Blblm uses both bootstrapping and subsampling methods, and works well on large datasets because it uses multinomial sampling instead of repeated sampling. Blblm is well-suited for parallel and distributed computing. Blblm is compuationally friendly, flexible, and maintains most of the statistical properties of regular bootstrapping. 
+
+## Abstract 
+This vignette is produced in order to aid in the understanding of the `blblm` package. This package serves three main functions that compute the bag of little bootstraps confidence intervals for linear regression coefficients, sigma, and prediction. Within these main functions are helper functions that are used to develop the confidence intervals. These helper functions include sampling, splitting, computing estimates, and mapping functions that are used in the main functions. This package also incorporates parallel computing in order to increase computational power for faster processing speed and efficiency. If having difficulties using package, use `?blblm::func` for more information.
+
+## Let's Begin
+```{r}
+library(blblm)
+```
+
+## Functions
+
+* **blblm_mod**
+
+`blblm_mod()` computes the bag of little bootstrap confidence intervals for sigma for each boot of the linear model. It has five parameters that include: regression formula (formula), numerical data (data), number of subsets for the data (m), number of bootstraps (B), and whether or not parallel computing is to be used (parallel).
+
+* **blmglm** 
+`blbglm()` is an alternative function that computes the bag of little bootstrap confidence intervals for sigma for each boot of the *logistic* model. It has five parameters that include: regression formula (formula), numerical data (data), number of subsets for the data (m), number of bootstraps (B), and whether or not parallel computing is to be used (parallel).
+
+
+*Important*: To run calculations parallelly for faster speed, first detect num of cores by running the following command:`future::availableCores()`. Then specify number of cores you want use by typing the number of cores for worker, in this case, we select 2. `future::plan(multisession, workers = 2)`. Typically you don't want to dedicate all of your computer's cores towards the function. 
+
+*Example*
+```{r}
+library(furrr)
+availableCores()
+plan(multisession, workers = 2)
+fit <- blblm_mod(mpg ~ wt * hp, data = mtcars, m = 3, B = 100, parallel = TRUE)
+```
+
+* **print.blblm**
+
+`print()` has just one parameter (x), that is used to print a string 'blblm model:' followed by the regression formula used. 
+
+*Examples*
+
+```{r}
+print(fit)
+```
+
+
+* **coef.blblm**
+
+`coef()` has just one parameter (object), that returns the coefficients of the fit, intercept, mean of each variable, and correlation of defined variables. 
+
+*Example*
+
+```{r}
+coef(fit)
+```
+
+* **sigma.blblm**
+
+`sigma()` has three parameters including (object), confidence interval (confidence), and significant level (level) that returns the sigma value and/or confidence interval of the fit. 
+
+*Example* 
+
+```{r}
+sigma(fit)
+
+sigma(fit, confidence = TRUE, level = .95)
+```
+
+* **confint.blblm**
+
+`confint()` has three parameters including (object), define regressors (parm), and significant level (level) that returns the confidence interval of the fit. 
+
+*Example* 
+
+```{r}
+confint(fit, c("wt", "hp"))
+```
+
+
+* **predict.blblm**
+
+`predict()` has four parameters including (object), the data to be used for prediction (new_data), confidence interval (confidence), and significant level (level) that computes the predicted fit for the new data and confidence interval if designated. 
+
+*Example*
+
+```{r}
+predict(fit, data.frame(wt = c(2.5, 3), hp = c(150, 170)))
+
+predict(fit, data.frame(wt = c(2.5, 3), hp = c(150, 170)), confidence = TRUE)
+```
+
+## Helper Functions
+
+* **split_data**
+
+Splits data into m parts of approximated equal sizes. `split_data(data, m)`
+
+* **lm_each_subsample** & **glm_each_subsample**
+
+A function that computes the estimates. `lm_each_subsample(formula, data, n, B)` & `glm_each_subsample(formula, data, n, B)`
+
+* **lm_each_boot** & **glm_each_boot**
+
+This function computes the regression estimates for a blb dataset. `lm_each_boot(formula, data, n)` & `glm_each_boot(formula, data, n)`
+
+* **lm1** & **glm1**
+
+Estimates the regression estimates based on given the number of repetitions. `lm1(formula, data, freqs)` & `glm1(formula, data, freqs)` 
+
+* **mean_lwr_upr**
+
+Responsible for computing the upper and lower means used for confidence intervals. `mean_lwr_upr(x, level = 0.95)`
+
+* **map_mean**
+
+Using the package purrr, this function computes the mean. `map_mean(.x, .f)` 
+
+* **map_cbind** 
+
+Combines two inputs by column using purrr package. `map_cbind(.x, .f)`
+
+* **map_rbind**
+
+Combines two inputs by row using purrr package. `map_rbind(.x, .f)`
+
+## My contributions
+In this package, I added the option for parallel computing in the `blblm_mod` function that allows for improved proccessing. Additionally, I added another R file, `blbglm` that mimics `blblm` but instead uses logistic regression rather than linear. This gives the user the option to use either regression approaches when utilizing this package on a data set. I also wrote tests for some functions and documentation for all the functions. Additionally, writing this vignette is something I learned and implemented into this package that allows for better understanding of the package. 
+
+
+
+
+
+
