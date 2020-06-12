@@ -1,5 +1,12 @@
 # blblm
 
+## Introduction
+This package contains the bag of little bootstraps for linear regression algorithm that assesses the quality of estimators. Blblm uses both bootstrapping and subsampling methods, and works well on large datasets because it uses multinomial sampling instead of repeated sampling. Blblm is well-suited for parallel and distributed computing. Blblm is compuationally friendly, flexible, and maintains most of the statistical properties of regular bootstrapping. 
+
+## Abstract 
+This vignette is produced in order to aid in the understanding of the `blblm` package. This package serves three main functions that compute the bag of little bootstraps confidence intervals for linear regression coefficients, sigma, and prediction. Within these main functions are helper functions that are used to develop the confidence intervals. These helper functions include sampling, splitting, computing estimates, and mapping functions that are used in the main functions. This package also incorporates parallel computing in order to increase computational power for faster processing speed and efficiency. If having difficulties using package, use `?blblm::func` for more information.
+
+
 <!-- badges: start -->
 <!-- badges: end -->
 
