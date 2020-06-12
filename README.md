@@ -6,6 +6,9 @@ This package contains the bag of little bootstraps for linear regression algorit
 ## Abstract 
 This vignette is produced in order to aid in the understanding of the `blblm` package. This package serves three main functions that compute the bag of little bootstraps confidence intervals for linear regression coefficients, sigma, and prediction. Within these main functions are helper functions that are used to develop the confidence intervals. These helper functions include sampling, splitting, computing estimates, and mapping functions that are used in the main functions. This package also incorporates parallel computing in order to increase computational power for faster processing speed and efficiency. If having difficulties using package, use `?blblm::func` for more information.
 
+## My contributions
+In this package, I added the option for parallel computing in the `blblm_mod` function that allows for improved proccessing. Additionally, I added another R file, `blbglm` that mimics `blblm` but instead uses logistic regression rather than linear. This gives the user the option to use either regression approaches when utilizing this package on a data set. I also wrote tests for some functions and documentation for all the functions. Additionally, writing this vignette is something I learned and implemented into this package that allows for better understanding of the usability of blblm. 
+
 
 <!-- badges: start -->
 <!-- badges: end -->
